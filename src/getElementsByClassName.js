@@ -5,27 +5,26 @@
 
 // But instead we're going to implement it from scratch:
 var getElementsByClassName = function (className){
-	// look through dom for
-	var elements = document.body;
-	var targets = [];
-	    if(elements.getAttribute('class')){
-    		if(elements.getAttribute('class').split(" ").indexOf(className) >= 0){
-    			targets.push(elements);
-    		}
-    	}
+	// look through dom for 
+	var body = document.body, targets = [];
+
+	if (body.getAttribute('class') && body.getAttribute('class').split(" ").indexOf(className) >= 0){
+    			targets.push(body);
+    	}// What if body has the target class? I haven't found a way to roll this all into one function.
+
 	function lookup(node){
     	for (var i=0;i<node.childNodes.length;i++){
-    		//console.log(node.childNodes[i].childNodes);
-    		if (node.childNodes[i].childNodes.length > 0){ lookup(node.childNodes[i]); } //keep digging 
-    		if(node.childNodes[i].getAttribute && node.childNodes[i].getAttribute('class')){
-    			console.log(node.childNodes[i].getAttribute('class').split(" "));
-    			if(node.childNodes[i].getAttribute('class').split(" ").indexOf(className) >= 0){
-    				targets.push(node.childNodes[i]);
-    			}
+            var tag = node.childNodes[i]; //console.log(subgroup.childNodes);
+    		if(tag.childNodes.length > 0){ lookup(tag); } //keep digging
+    		if( tag.getAttribute && 
+                tag.getAttribute('class') && 
+                tag.getAttribute('class').split(" ").indexOf(className) >= 0){ //console.log(subgroup.getAttribute('class'));
+    			 targets.push(tag);
     		}
-		}
-	} //each
-	lookup(elements);
-    //console.log(targets);
+    	}
+	}
+
+	lookup(body); //console.log(targets);
+
     return targets;
 };
