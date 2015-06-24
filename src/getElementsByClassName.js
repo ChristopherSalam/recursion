@@ -24,7 +24,7 @@ var getElementsByClassName = function (className){
     			}
     		}
 		}
-	}
+	} //each
 	lookup(elements);
     return targets;
 };
